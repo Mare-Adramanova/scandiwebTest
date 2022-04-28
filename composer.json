@@ -1,0 +1,17 @@
+{
+    "name": "korisnik/php-test",
+    "autoload": {
+        "psr-4": {
+            "App\\": "./src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mare-Adramanova",
+            "email": "mareadramanova@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.4"
+    }
+}
