@@ -19,7 +19,7 @@ class FurnitureRequest extends ModelRequest {
             'sku' => $request['sku'],
         ], 3)->maximum([
             'sku' => $request['sku'],
-        ], 7)
+        ], 15)
         ->getInputs();
     }
 }

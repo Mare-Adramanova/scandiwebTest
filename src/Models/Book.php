@@ -4,8 +4,9 @@ namespace App\Models;
 
 class Book extends Product
 {
-
     protected $table = 'books';
+
+    private $weight;
 
     public function getWeight()
     {
@@ -19,7 +20,7 @@ class Book extends Product
         return $this;
     }
 
-    protected function getAllRecords()
+    protected function setAllRecords()
     {
         return [
             'sku' => $this->getSku(),
@@ -29,36 +30,5 @@ class Book extends Product
             'weight' => $this->getWeight()
         ];
     }
-
-    public function insert()
-    {
-        try {
-            $sql = "
-                    INSERT INTO $this->table ( sku, name, price, productType, weight)  
-                    VALUES ( :sku, :name, :price, :product, :weight)
-                    ";
-            $query = $this->setConnection()->prepare($sql);
-            $query->bindValue(':sku', $this->getSku(), \PDO::PARAM_STR);
-            $query->bindValue(':name', $this->getName(), \PDO::PARAM_STR);
-            $query->bindValue(':price', $this->getPrice(), \PDO::PARAM_INT);
-            $query->bindValue(':product', $this->getproductType(), \PDO::PARAM_STR);
-            $query->bindValue(':weight', $this->getWeight(), \PDO::PARAM_STR);
-            return $query->execute();
-        } catch (\PDOException $exception) {
-            throw new $exception->getMessage();
-        }
-    }
-
-    public function setAllBooks()
-    {
-        $sql = " SELECT * FROM books ";
-        $query = $this->setConnection()->prepare($sql);
-        $query->execute();
-        return $query->fetchAll(\PDO::FETCH_OBJ);
-    }
-
-    public function getAllBooks()
-    {
-        return $this->setAllBooks();
-    }
+    
 }

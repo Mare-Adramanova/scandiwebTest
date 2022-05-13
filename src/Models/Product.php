@@ -2,20 +2,20 @@
 
 namespace App\Models;
 
+
 class Product extends Model
 {
-    protected $sku;
-    protected $name;
-    protected $price;
-    protected $productType;
-    protected $tables = ['books', 'dvds', 'furniture'];
+    protected string $sku;
+    protected string $name;
+    protected float $price;
+    protected string $productType;
 
-    public function getSku()
+    public function getSku(): string
     {
         return $this->sku;
     }
 
-    public function setSku($sku)
+    public function setSku($sku): self
     {
         $this->sku = $sku;
         return $this;
@@ -52,24 +52,5 @@ class Product extends Model
     {
         $this->productType = $productType;
         return $this;
-    }
-
-    public function delete()
-    {
-        if (isset($_POST['delete']) && !empty($_POST['checkbox'])) {
-            $sku = [];
-            foreach ($_POST['checkbox'] as $val) {
-                $sku[] =  $val;
-            }
-            $sku = implode("','", $sku);
-            for ($i = 0; $i < count($this->tables); $i++) {
-                $singleTable = $this->tables[$i];
-                $sql = "
-                DELETE FROM $singleTable WHERE sku IN ('" . $sku . "')
-                ";
-                $query = $this->setConnection()->prepare($sql);
-                $query->execute();
-            }
-        }
     }
 }

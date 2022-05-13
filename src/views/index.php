@@ -34,7 +34,9 @@
           <div class="col-lg-3">
             <div class="card flex-row flex-wrap">
               <div class="m-3">
-                <input type="checkbox" class="delete-checkbox" name="checkbox[]" value="<?= $product->sku ?>">
+                  <label>
+                      <input type="checkbox" class="delete-checkbox" name="productType[<?= $product->productType ?>][]" value="<?= $product->id ?>">
+                  </label>
               </div>
               <div class="card-body card-block col-lg-8">
                 <div class="card-text">

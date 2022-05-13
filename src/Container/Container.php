@@ -10,7 +10,7 @@ class Container implements ContainerInterface
     private array $services = [];
 
     /**
-     * @throws ReflectionException
+     * @throws ReflectionException|NotFoundException
      */
     public function register(string $key, $value): Container
     {
@@ -39,15 +39,10 @@ class Container implements ContainerInterface
         return isset($this->services[$id]);
     }
 
-    public function getServices()
-    {
-        return $this->services;
-    }
-
     /**
-     * @throws ReflectionException
+     * @throws ReflectionException|NotFoundException
      */
-    private function resolveDependency($item)
+    private function resolveDependency($item): ?object
     {
         if (is_callable($item)) {
             return $item();
@@ -58,7 +53,7 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @throws ReflectionException
+     * @throws ReflectionException|NotFoundException
      */
     private function getInstance(\ReflectionClass $item): ?object
     {

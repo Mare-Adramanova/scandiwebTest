@@ -28,7 +28,7 @@ try {
         new Config($_ENV)
     ))->run();
 } catch (NotFoundException $e) {
-    throw new $e->getMessage();
+   throw new $e;
 } catch (ReflectionException $e) {
-    throw new NotFoundException();
+   throw new NotFoundException();
 }

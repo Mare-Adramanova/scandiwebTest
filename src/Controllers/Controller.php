@@ -4,27 +4,29 @@ namespace App\Controllers;
 
 use App\ModelRequests\ModelRequest;
 
-class Controller {
-
-    protected $modelRequest;
+class Controller
+{
+    protected ModelRequest $modelRequest;
 
     public function __construct(ModelRequest $modelRequest)
     {
         $this->modelRequest = $modelRequest;
     }
 
-    protected function redirect($response = null){
-        if(!is_null($response)) {
-            header('Location: ' . $response); 
+    protected function redirect($response = null)
+    {
+        if (!is_null($response)) {
+            header('Location: ' . $response);
             exit;
         }
 
         return $this;
     }
 
-    protected function redirectBack($response = null){
-        if(is_null($response)) {
-            header('Location: ' . $_SERVER['REQUEST_URI']); 
+    protected function redirectBack($response = null)
+    {
+        if (is_null($response)) {
+            header('Location: ' . $_SERVER['REQUEST_URI']);
             exit;
         }
 

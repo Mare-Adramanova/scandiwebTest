@@ -7,7 +7,6 @@ use ReflectionException;
 
 class Application extends Container
 {
-    private $routes = [];
     private static DB $db;
     private $router;
     private $request;

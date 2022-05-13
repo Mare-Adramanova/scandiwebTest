@@ -1,18 +1,18 @@
 <?php
+
 namespace App\Controllers;
 
-use App\Application;
 use App\ModelRequests\BookRequest;
 use App\ModelRequests\DvdRequest;
 use App\ModelRequests\FurnitureRequest;
-use App\ModelRequests\Request;
 use App\Models\Book;
 use App\Models\Dvd;
 use App\Models\Furniture;
+use App\Request;
 use App\View;
 
 class ProductController extends Controller
-{   
+{
     private BookRequest $bookRequest;
     private FurnitureRequest $furnitureRequest;
     private DvdRequest $dvdRequest;
@@ -21,7 +21,14 @@ class ProductController extends Controller
     private Dvd $dvd;
     private Furniture $furniture;
 
-    public function __construct(Request $request, Book $book, Dvd $dvd, Furniture $furniture, BookRequest $bookRequest, FurnitureRequest $furnitureRequest, DvdRequest $dvdRequest)
+    public function __construct(
+        Request          $request,
+        Book             $book,
+        Dvd              $dvd,
+        Furniture        $furniture,
+        BookRequest      $bookRequest,
+        FurnitureRequest $furnitureRequest,
+        DvdRequest       $dvdRequest)
     {
         $this->bookRequest = $bookRequest;
         $this->furnitureRequest = $furnitureRequest;
@@ -32,92 +39,73 @@ class ProductController extends Controller
         $this->request = $request;
     }
 
+    /**
+     * @throws \App\Exceptions\ViewNotFoundException
+     */
     public function index()
     {
         $products = [
-            'books' => $this->book->getAllBooks(),
-            'dvds' => $this->dvd->getAllDvds(),
-            'furnitures' => $this->furniture->getAllFurniture(),
+            'books' => $this->book->get(),
+            'dvds' => $this->dvd->get(),
+            'furnitures' => $this->furniture->get(),
         ];
         return View::make('index', ['products' => $products])->render();
     }
 
+    /**
+     * @throws \App\Exceptions\ViewNotFoundException
+     */
     public function create()
     {
         return View::make('create')->render();
     }
 
-    public function store(){
+    private function validate($type)
+    {
+        return [
+            'book' => $this->{$type.'Request'}->rules($this->request->post()),
+            'dvd' => $this->{$type. 'Request'}->rules($this->request->post()),
+            'furniture' => $this->{$type.'Request'}->rules($this->request->post()),
+        ];
 
-        $this->request->post('productType') == 'book' ? $this->bookRequest->rules([
-            'sku' => $this->request->post('sku'),
-            'name' => $this->request->post('name'),
-            'weight' => $this->request->post('weight'),
-            'price' => $this->request->post('price')
-       ]) : null;
+    }
 
-       $this->request->post('productType') == 'dvd' ? $this->dvdRequest->rules([
-            'sku' => $this->request->post('sku'),
-            'name' => $this->request->post('name'),
-            'size' => $this->request->post('size'),
-            'price' => $this->request->post('price')
-        ]) : null;
-        
-        $this->request->post('productType') == 'furniture' ? $this->furnitureRequest->rules([
-            'sku' => $this->request->post('sku'),
-            'name' => $this->request->post('name'),
-            'height'=> $this->request->post('height'),
-            'width' => $this->request->post('width'),
-            'length' => $this->request->post('length'),
-            'price' => $this->request->post('price')
-        ]) : null;
+    private function storeModels($data)
+    {
+        $models = [
+            'dvd' => $this->dvd->save($this->request->post()),
+            'furniture' => $this->furniture->save($this->request->post()),
+            'book' => $this->book->save($this->request->post()),
+        ];
 
-        if($this->request->post('productType') == 'book'){
-            $book = $this->book;
-            $book->setSku($this->request->post('sku'));
-            $book->setName($this->request->post('name'));
-            $book->setPrice($this->request->post('price'));
-            $book->setproductType($this->request->post('productType'));
-            $book->setWeight($this->request->post('weight'));
-            $book->insert();
+        return $models[$data];
+    }
+
+    public function store()
+    { 
+       $this->validate($this->request->post('productType')); 
+       
+       try {
+            $this->storeModels($this->request->post('productType'));
+        } catch (\PDOException $exception) {
+            throw $exception;
         }
-        
-        if($this->request->post('productType') == 'dvd'){
-            $dvd = $this->dvd;
-            $dvd->setSku($this->request->post('sku'));
-            $dvd->setName($this->request->post('name'));
-            $dvd->setPrice($this->request->post('price'));
-            $dvd->setproductType($this->request->post('productType'));
-            $dvd->setSize($this->request->post('size'));
-            $dvd->insert();
-        }   
 
-        if($this->request->post('productType') == 'furniture'){
-            $furniture = $this->furniture;
-            $furniture->setSku($this->request->post('sku'));
-            $furniture->setName($this->request->post('name'));
-            $furniture->setPrice($this->request->post('price'));
-            $furniture->setproductType($this->request->post('productType'));
-            $furniture->setWidth($this->request->post('width'));
-            $furniture->setHeight($this->request->post('height'));
-            $furniture->setLength($this->request->post('length'));
-            $furniture->insert();
-        }
-        
-        return $this->redirect('/phpTest');  
+        return $this->redirect('/phpTest');
     }
 
     public function cancel()
     {
-        header('Location: ' . "/phpTest/");  
+        header('Location: ' . "/phpTest/");
     }
 
-    public function delete(){
+    public function delete()
+    {
         $products = [
-            $this->dvd->delete(),
-            $this->furniture->delete(),
-            $this->book->delete(),
+            $this->dvd->destroy($this->request->post()),
+            $this->furniture->destroy($this->request->post()),
+            $this->book->destroy($this->request->post()),
         ];
-        header('Location: ' . "/phpTest/");  
+        header('Location: ' . "/phpTest/");
     }
 }

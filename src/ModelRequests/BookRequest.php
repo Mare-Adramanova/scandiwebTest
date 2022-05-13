@@ -2,6 +2,7 @@
 
 namespace App\ModelRequests;
 
+
 class BookRequest extends ModelRequest
 {
     public function rules($request)
@@ -17,7 +18,7 @@ class BookRequest extends ModelRequest
             'sku' => $request['sku'],
         ], 3)->maximum([
             'sku' => $request['sku'],
-        ], 7)->isDecimal([
+        ], 15)->isDecimal([
             'weight' => $request['weight'],
         ])
         ->getInputs();

@@ -17,7 +17,7 @@ class DB
             $this->pdo = new \PDO(
                 'mysql:host=' . $config['host'] . ';dbname=' . $config['database'],
                 $config['user'],
-                $config['pass']
+                $config['pass'],
             );
             $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 

@@ -2,19 +2,17 @@
 
 namespace App\ModelRequests;
 
-use App\ModelRequests\Validation;
+use App\ModelRequests\Interfaces\ModelRequestsInterface;
+use App\ModelRequests\Validation\Validation;
 
-class ModelRequest implements ModelRequestsInterface {
-    
+abstract class ModelRequest
+{
     protected Validation $validation;
 
     public function __construct(Validation $validation)
     {
         $this->validation = $validation;
     }
-    
-    public function rules($array)
-    {
-        
-    }
+
+    abstract function rules($array);
 }

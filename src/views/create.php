@@ -22,20 +22,20 @@
 
       <div class="container p-3">
         <div class="form-group mb-3 mt-3">
-          <label for="SKU">SKU:</label>
+          <label for="sku">SKU:</label>
           <input type="text" id="sku" name="sku" class="form-control" required>
         </div>
         <div class="form-group mb-3">
-          <label for="Name">Name:</label>
+          <label for="name">Name:</label>
           <input type="text" id="name" name="name" class="form-control" required>
         </div>
         <div class="form-group mb-3">
-          <label for="Price">Price:</label>
+          <label for="price">Price:</label>
           <input type="number" id="price" name="price" class="form-control" required>
         </div>
         <div class="form-group mb-3">
-          <label>Type Switcher:</label>
-          <select id="productType" name="productType" onChange="prodType(this.value);" class="form-control" required>
+          <label for="productTypes">Type Switcher:</label>
+          <select id="productTypes" name="productType" onChange="prodType(this.value);" class="form-control" required>
             <option value="">Choose Switcher</option>
             <option value="dvd">DVD</option>
             <option value="book">Book</option>
@@ -44,7 +44,7 @@
         </div>
         <div class="fieldbox" id="dvd_attributes">
           <div class="form-group">
-            <label>Size</label>
+            <label for="size">Size</label>
             <input type="text" name="size" value="" class="form-control" placeholder="size" id="size">
           </div>
           <p>
@@ -53,7 +53,7 @@
         </div>
         <div class="fieldbox" id="book_attributes">
           <div class="form-group">
-            <label>Weight</label>
+            <label for="weight">Weight</label>
             <input type="text" name="weight" value="" class="form-control" placeholder="weight 0.000" id="weight">
           </div>
           <p>
@@ -62,15 +62,15 @@
         </div>
         <div class="fieldbox" id="furniture_attributes">
           <div class="form-group">
-            <label>Height</label>
+            <label for="height">Height</label>
             <input type="text" name="height" class="form-control" id="height">
           </div>
           <div class="form-group">
-            <label>Width</label>
+            <label for="width">Width</label>
             <input type="text" name="width" class="form-control" id="width">
           </div>
           <div class="form-group">
-            <label>Length</label>
+            <label for="lenght">Length</label>
             <input type="text" name="length" class="form-control" id="length">
           </div>
           <p>

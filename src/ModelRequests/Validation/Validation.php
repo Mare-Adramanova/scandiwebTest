@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ModelRequests;
+namespace App\ModelRequests\Validation;
 
 class Validation
 {
@@ -32,7 +32,7 @@ class Validation
 
         return $this;
     }
-    
+
     public function minimum($inputs, $min)
     {
         if (strlen(array_values($inputs)[0]) < $min) {
@@ -67,6 +67,7 @@ class Validation
     public function getInputs()
     {
         $preparedArray = array_merge(...$this->validatedInputs);
+
         if (count($preparedArray) > 0) {
             return $this->response($preparedArray);
         }
