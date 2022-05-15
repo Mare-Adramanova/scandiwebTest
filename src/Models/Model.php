@@ -33,9 +33,9 @@ abstract class Model implements ModelInterface
     }
 
     public function save($data)
-    {
+    {   
         $data = $this->defineModelType($data);
-
+        var_dump($data);
         return $this->getQueryBuilder()->insert($data);
     }
 
@@ -96,8 +96,6 @@ abstract class Model implements ModelInterface
             if (isset($data[$property->getName()])) {
                 $preparedData[$property->getName()] = $data[$property->getName()];
             }
-
-
         }
 
         return $preparedData;

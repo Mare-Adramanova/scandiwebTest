@@ -20,7 +20,9 @@ class BookRequest extends ModelRequest
             'sku' => $request['sku'],
         ], 15)->isDecimal([
             'weight' => $request['weight'],
-        ])
+        ])->unique([
+            'sku' => $request['sku'],
+        ], 'books')
         ->getInputs();
     }
 }

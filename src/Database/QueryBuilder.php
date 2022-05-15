@@ -87,4 +87,16 @@ class QueryBuilder
         return $query->fetchAll(\PDO::FETCH_OBJ);
     }
 
+    public function selectBySku($table, $sku){
+        $sku = "'" . $sku . "'";
+        $sql = " 
+        SELECT * FROM $table
+        WHERE `sku` = $sku;
+        ";
+        $query = $this->setDbConnection()->prepare($sql);
+        $query->execute();
+
+        return $query->fetchAll(\PDO::FETCH_OBJ);
+    }
+
 }

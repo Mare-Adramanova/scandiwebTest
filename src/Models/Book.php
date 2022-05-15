@@ -5,8 +5,8 @@ namespace App\Models;
 class Book extends Product
 {
     protected $table = 'books';
-
-    private $weight;
+    
+    protected $weight;
 
     public function getWeight()
     {

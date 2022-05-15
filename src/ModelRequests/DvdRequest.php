@@ -19,7 +19,9 @@ class DvdRequest extends ModelRequest {
             'sku' => $request['sku'],
         ], 3)->maximum([
             'sku' => $request['sku'],
-        ], 15)
+        ], 15)->unique([
+            'sku' => $request['sku'],
+        ], 'dvds')
         ->getInputs();
     }
 }

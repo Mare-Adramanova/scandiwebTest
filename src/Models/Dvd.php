@@ -6,7 +6,7 @@ class Dvd extends Product
 {
     protected $table = 'dvds';
 
-    private $size;
+    protected $size;
 
     public function getSize()
     {

@@ -2,8 +2,25 @@
 
 namespace App\ModelRequests\Validation;
 
+use App\Database\QueryBuilder;
+
 class Validation
 {
+    public function __construct(QueryBuilder $query)
+    {
+        $this->query = $query;
+    }
+
+    public function unique(array $inputs, $table)
+    {
+        $records = $this->query->selectBySku($table, $inputs[array_key_first($inputs)]);
+        if(count($records) > 0){
+            $this->validatedInputs[] = [array_key_first($inputs) => 'This field needs to be unique'];
+        }
+        
+        return $this;
+    }
+
     public array $validatedInputs = [];
 
     public function required(array $inputs)
